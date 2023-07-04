@@ -1,0 +1,19 @@
+#!/bin/csh
+#$ -cwd
+#$ -V -S /bin/bash
+#$ -q all.q
+#$ -N half_circle
+
+echo "$1_$2"
+name="$1_$2"
+# g++ -std=c++11 -o half_circle half_circle.cpp 
+nohup time ./half_circle $1 $2
+echo "done"
+wait
+nohup time python snapshot2.py $1 $2 
+wait
+nohup time python animation.py $1 $2 
+echo "done"
+
+
+

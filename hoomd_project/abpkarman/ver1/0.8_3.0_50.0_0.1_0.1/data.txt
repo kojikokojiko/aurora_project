@@ -1,0 +1,17 @@
+real_time 200
+dt 7e-06
+nsteps 28571428
+N 221850
+m 1.0
+epsilon_aa 1.0
+epsilon_ab 1.0
+kbT 1.0
+rho 0.8
+ave_flow 3.0
+static_dia 50.0
+sigma_aa 1.0
+sigma_ab 25.5
+v0 0.1
+DR 0.1
+DTrans 0.03333333333333333
+Pe 1.0

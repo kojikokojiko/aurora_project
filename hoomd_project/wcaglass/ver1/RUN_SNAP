@@ -1,0 +1,17 @@
+#!/bin/csh
+#$ -cwd
+#$ -V -S /bin/bash
+#$ -q gpu.q
+#$ -N wca_glass_snap
+
+echo "$1_$2_$3"
+
+
+conda activate hoomd
+
+nohup time  python ../code/snapshot.py $1 $2 $3
+# nohup time python snap.py $1 $2
+# nohup time python animation.py $1 $2
+
+
+

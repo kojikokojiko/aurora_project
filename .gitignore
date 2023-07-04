@@ -1,0 +1,12 @@
+*.png
+*.gif
+*.jpg
+*.log
+*.e*
+*.o*
+*.dat
+core.*
+*.gsd
+rx*
+ry*
+*.pickle

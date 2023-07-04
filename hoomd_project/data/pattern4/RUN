@@ -1,0 +1,17 @@
+#!/bin/csh
+#$ -cwd
+#$ -V -S /bin/bash
+#$ -q gpu.q
+#$ -N eq_state
+
+echo "$1_$2_$3_$4_$5"
+
+conda activate hoomd 
+
+# nohup time python test.py 
+nohup time python eq_state.py $1 $2 $3 $4 $5
+# nohup time python snap.py $1 $2
+# nohup time python animation.py $1 $2
+
+
+
