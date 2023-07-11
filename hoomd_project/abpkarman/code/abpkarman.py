@@ -105,8 +105,8 @@ kbT = 1.0
 
 # h=5e-4
 # dt = 1e-6
-real_time=200
-dt = 7e-6
+real_time=100
+dt = 1e-5
 nsteps=int(real_time/dt)
 pos_hout=int(nsteps/500)
 
@@ -132,9 +132,15 @@ snapshot = gsd.hoomd.Frame()
 snapshot.particles.N = N
 snapshot.particles.position = position[0:N]
 
+orientation = np.zeros((N,4))
+
+for i in range(N):
+    theta=random.uniform(-np.pi,np.pi)
+    orientation[i][0]=math.cos(theta/2)
+    orientation[i][3]=math.sin(theta/2)
 
 # (1,0,0,0,)
-# snapshot.particles.orientation = orientation
+snapshot.particles.orientation = orientation
 snapshot.particles.typeid = (N)*[0]
 snapshot.particles.types = ['Move']
 snapshot.particles.diameter=(N)*[1.0]
@@ -213,10 +219,9 @@ rotational_diffusion_updater = active.create_diffusion_updater(
 
 
 
-nve = hoomd.md.methods.ConstantVolume(filter=hoomd.filter.All())
 integrator = hoomd.md.Integrator(
  dt=dt,
- methods=[nve],
+ methods=[odb],
  forces=[lj, ljw, active, constant],
 )
 

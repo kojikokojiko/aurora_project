@@ -1,6 +1,6 @@
 real_time 200
-dt 7e-06
-nsteps 28571428
+dt 3e-05
+nsteps 6666666
 N 221850
 m 1.0
 epsilon_aa 1.0

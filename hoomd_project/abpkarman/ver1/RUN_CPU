@@ -1,0 +1,16 @@
+#!/bin/csh
+#$ -cwd
+#$ -V -S /bin/bash
+#$ -q all.q
+#$ -N abp_karman
+
+echo "$1_$2_$3_$4_$5"
+
+
+conda activate hoomd
+
+# nohup time  python ../code/abpkarman.py $1 $2 $3 $4 $5
+nohup time  python ../code/phai6.py $1 $2 $3 $4 $5
+
+
+

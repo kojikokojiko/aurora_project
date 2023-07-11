@@ -3,9 +3,9 @@
 
 
 rho_list=(0.8)
-ave_flow_list=(1.0 2.0 3.0 5.0 8.0)
+ave_flow_list=(1.0 3.0 5.0 )
 static_dia=50.0
-reduced_speed_list=(0.0 0.1 1.0 10.0 )
+reduced_speed_list=(0.0 1.0 3.0 5.0 10.0 )
 rotational_diffusion_list=(0.1 )
 for rho in "${rho_list[@]}"
 do 
@@ -16,7 +16,7 @@ do
 
             for rotational_diffusion in  "${rotational_diffusion_list[@]}"
             do
-                qsub RUN $rho $ave_flow $static_dia $reduced_speed  $rotational_diffusion
+                qsub RUN_CPU $rho $ave_flow $static_dia $reduced_speed  $rotational_diffusion
             done
             
         done

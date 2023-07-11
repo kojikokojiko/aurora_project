@@ -10,3 +10,4 @@ core.*
 rx*
 ry*
 *.pickle
+*.npy
