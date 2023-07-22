@@ -97,7 +97,7 @@ remove_dx_num=math.ceil(static_dia*0.5/dx)
 # temp=1.0
 m=1.0
 epsilon=1.0
-kbT = 1.0
+kbT = 0.5
 
 
 
@@ -216,17 +216,40 @@ rotational_diffusion_updater = active.create_diffusion_updater(
 
 
 
+class RandomForce(hoomd.md.force.Custom):
+    def __init__(self,DTrans,gamma):
+        super().__init__()
+        self.DTrans=DTrans
+        self.gamma=gamma
+        
+    
+    def set_forces(self, timestep):
+        with self.cpu_local_force_arrays as arrays:
+            random_force = np.random.randn(N, 3) * np.sqrt(2 * self.DTrans)*self.gamma
+            # set third column to 0.0
+            random_force[:, 2] = 0.0
+            arrays.force=random_force
+            
+
+random_force=RandomForce(
+    DTrans=DTrans,
+    gamma=odb.gamma.default,
+)
+
+
+
+
 
 
 
 integrator = hoomd.md.Integrator(
  dt=dt,
  methods=[odb],
- forces=[lj, ljw, active, constant],
+ forces=[lj, ljw, active, constant,random_force],
 )
 
 
-# sim.operations += rotational_diffusion_updater
+sim.operations += rotational_diffusion_updater
 sim.operations.integrator = integrator
 
 # カスタムクラス
@@ -264,11 +287,11 @@ variables = {
     'dt': dt,
     'nsteps': nsteps,
     'N': N,
+    "pos_hout": pos_hout,
 
     'm': m,
     'epsilon_aa': epsilon_aa,
-    'epsilon_ab': epsilon_aa,
-    'epsilon_aa': epsilon_aa,
+    'epsilon_ab': epsilon_ab,
 
     
     'kbT': kbT,

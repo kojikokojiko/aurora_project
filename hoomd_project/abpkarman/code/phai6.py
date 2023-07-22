@@ -61,7 +61,7 @@ main_dir="./"+pattern
 traj_dir=main_dir+"/log_pos.gsd"
 
 
-phi6_2_dir=main_dir+"/phi6_2"
+phi6_2_dir=main_dir+"/phi6_2_temp"
 # i_phi_dir=main_dir+"/i_phi"
 if not os.path.exists(phi6_2_dir): os.makedirs(phi6_2_dir)
 # if not os.path.exists(i_phi_dir): os.makedirs(i_phi_dir)
@@ -140,12 +140,19 @@ fact=ax_point/xsize
 size*=2*fact
 
 ####################################################
-for t in range(len(traj)-1,len(traj)-2,-1):
+for t in range(len(traj)-1,len(traj)-10,-2):
     
     print(t)
     pos=traj[t].particles.position.T
     rx=pos[0]
     ry=pos[1]
+    
+    if all(-lx/2.0 <= x <= lx/2.0 for x in rx)==False:
+        continue
+    if all(-ly/2.0 <= y <= ly/2.0 for y in ry)==False:
+        continue
+    
+
 
 
     # Gmap_create########################
@@ -154,6 +161,16 @@ for t in range(len(traj)-1,len(traj)-2,-1):
     for i in range(NP):
         gx_map=int((rx[i]+lx/2)/l_gx)
         gy_map=int((ry[i]+ly/2)/l_gy)
+        
+        
+        # 粒子が上の境界ギリギリにいた時は、gx_mapがn_gxを超えてしまうので、その対策
+        if rx[i]==lx/2:
+            print("JUST ON THE TOP BORDER")
+            gx_map-=1
+        if ry[i]==ly/2:
+            gy_map-=1
+            print("JUST ON THE TOP BORDER")
+            
         if(g_map[gy_map][gx_map]!=-1):
             print("TOO LARGE GRID")
             sys.exit()

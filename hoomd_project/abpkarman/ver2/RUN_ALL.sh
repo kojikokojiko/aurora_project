@@ -3,10 +3,16 @@
 
 
 rho_list=(0.8)
-ave_flow_list=(1.0 3.0 5.0 )
+ave_flow_list=(1.0 3.0 5.0 ) 
 static_dia=50.0
-reduced_speed_list=(10.0 )
-rotational_diffusion_list=(0.1 10.0 )
+reduced_speed_list=(0.1 0.5 15.0 20.0 30.0)
+rotational_diffusion_list=(0.1 1.0 )
+
+# rho_list=(0.8)
+# ave_flow_list=(3.0 )
+# static_dia=50.0
+# reduced_speed_list=(3.0 )
+# rotational_diffusion_list=( 0.1 )
 for rho in "${rho_list[@]}"
 do 
     for ave_flow in  "${ave_flow_list[@]}"
@@ -17,6 +23,9 @@ do
             for rotational_diffusion in  "${rotational_diffusion_list[@]}"
             do
                 qsub RUN $rho $ave_flow $static_dia $reduced_speed  $rotational_diffusion
+                # qsub PHAI6 $rho $ave_flow $static_dia $reduced_speed  $rotational_diffusion
+                # qsub PHAI6_SCATTER $rho $ave_flow $static_dia $reduced_speed  $rotational_diffusion
+                # qsub SCATTER $rho $ave_flow $static_dia $reduced_speed  $rotational_diffusion
             done
             
         done
